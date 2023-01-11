@@ -23,6 +23,8 @@ export class AuthService {
     }
 
     get isUserLoggedIn(): boolean {
+        //TODO: true setzt login ausser Kraft
+        return true;
         return this.accessToken !== "";
     }
 

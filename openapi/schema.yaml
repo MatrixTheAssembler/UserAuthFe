@@ -81,7 +81,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/CreateUserDto"
+                            $ref: "#/components/schemas/User"
                 required: true
             responses:
                 "200":
@@ -120,20 +120,38 @@ components:
                     type: string
                 username:
                     type: string
+                password:
+                    type: string
                 roles:
                     type: array
                     items:
                         $ref: "#/components/schemas/RoleEnum"
 
-        CreateUserDto:
+        Article:
             type: object
             required:
-                - username
-                - password
+                - headLine
+                - content
             properties:
-                username:
+                id:
+                    type: number
+                headLine:
                     type: string
-                password:
+                content:
+                    type: string
+                comments:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Comment"
+
+        Comment:
+            type: object
+            required:
+                - content
+            properties:
+                id:
+                    type: number
+                content:
                     type: string
 
         RoleEnum:

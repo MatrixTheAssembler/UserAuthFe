@@ -1,0 +1,8 @@
+<div class="border border-bottom row justify-content-between">
+    <h1 class="col-3 link-pointer" routerLink="">Cyber-Sicherheit Blog</h1>
+
+    <div class="col-1 mt-1">
+        <button *ngIf="isLoggedIn" (click)="login()" class="btn btn-outline-primary btn-lg">Login</button>
+        <button *ngIf="!isLoggedIn" (click)="logout()" class="btn btn-outline-primary btn-lg">Logout</button>
+    </div>
+</div>

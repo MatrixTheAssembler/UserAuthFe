@@ -41,7 +41,7 @@ export class DataService {
 
     public getPageSize(): number {
         const pageSize = localStorage.getItem("pageSize");
-        return pageSize ? Number(pageSize) : 10;
+        return pageSize ? Number(pageSize) : 5;
     }
 
     set existUnsavedChanges(existUnsavedChange: Observable<boolean> | boolean) {

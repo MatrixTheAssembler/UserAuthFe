@@ -2,8 +2,21 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap');
 
+*{
+    font-family: 'Noto Sans', sans-serif;
+}
+
+h1{
+    margin-top: 2rem;
+    margin-left: 2rem;
+}
 
 .form-group {
     margin-bottom: 30px;
+}
+
+.link-pointer:hover{
+    cursor: pointer;
 }
