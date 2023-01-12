@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "./services/auth.service";
-import {MessageService} from "./services/message-service.service";
+import {MessageService} from "./services/message.service";
 import {take} from "rxjs";
 
 @Component({

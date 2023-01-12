@@ -5,7 +5,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {DataService} from "../../services/data.service";
 import {LoginApiService} from "../../../../build/openapi";
-import {MessageService} from "../../services/message-service.service";
+import {MessageService} from "../../services/message.service";
 import {take} from "rxjs";
 
 @Component({
@@ -50,9 +50,5 @@ export class LoginComponent implements OnInit {
     public displayAlert(message: string, error: string): void {
         this.messageService.displayAlert(message, error);
         this.viewportScroller.scrollToPosition([0, 0]);
-    }
-
-    public register(): void {
-        this.router.navigate(["register"]);
     }
 }

@@ -1,1 +1,22 @@
-<h1>Article {{articleId}}</h1>
+<h1 class="ms-5 mt-4">{{articleHeadLine}}</h1>
+<div class="mx-5 mt-4">
+    <div>{{articleContent}}</div>
+
+    <div class="comments_section">
+        <h3>Comments ({{articleComments.length}})</h3>
+
+        <form [formGroup]="commentForm">
+            <div class="form-group">
+                <label for="comment">New Comment</label>
+                <textarea class="form-control" rows="3" formControlName="comment" id="comment"></textarea>
+            </div>
+            <button class="btn btn-primary" (click)="addComment()">Submit</button>
+        </form>
+
+        <div class="comments">
+            <div *ngFor="let comment of articleComments" class="shadow-sm">
+                <div class="border rounded-2 mt-3 p-2">{{comment.content}}</div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<h1 class="text-center mt-4">Admin Console</h1>
+
+<div class="d-flex justify-content-center">
+    <div class="mt-5 col-5">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th class="text-center">{{firstLetterBig(RolesEnum.AUTOR)}}</th>
+                <th class="text-center">{{firstLetterBig(RolesEnum.MODERATOR)}}</th>
+                <th class="text-center">{{firstLetterBig(RolesEnum.ADMIN)}}</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.username}}</td>
+                <td class="text-center">
+                    <input type="checkbox" class="form-check-input" [checked]="user.roles!.includes(RolesEnum.AUTOR)"
+                           (change)="changeRole(user, RolesEnum.AUTOR)">
+                </td>
+                <td class="text-center">
+                    <input type="checkbox" class="form-check-input" [checked]="user.roles!.includes(RolesEnum.MODERATOR)"
+                           (change)="changeRole(user, RolesEnum.MODERATOR)">
+                </td>
+                <td class="text-center">
+                    <input type="checkbox" class="form-check-input" [checked]="user.roles!.includes(RolesEnum.ADMIN)"
+                           (change)="changeRole(user, RolesEnum.ADMIN)">
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+

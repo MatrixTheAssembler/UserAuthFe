@@ -7,24 +7,26 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {LoginComponent} from './components/login/login.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {ArticleListComponent} from './components/article-list/article-list.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RegisterComponent} from './components/register/register.component';
 import {AuthInterceptor} from "./interceptors/auth-interceptor.service";
-import {ArticleOverviewComponent} from './components/article-overview/article-overview.component';
 import {HeaderComponent} from './components/header/header.component';
 import {ArticleComponent} from './components/article/article.component';
+import {NewArticleComponent} from './components/new-article/new-article.component';
+import {AdminConsoleComponent} from './components/admin-console/admin-console.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     LoginComponent,
-    DashboardComponent,
+    ArticleListComponent,
     RegisterComponent,
-    ArticleOverviewComponent,
     HeaderComponent,
-    ArticleComponent
+    ArticleComponent,
+    NewArticleComponent,
+    AdminConsoleComponent
   ],
     imports: [
         BrowserModule,

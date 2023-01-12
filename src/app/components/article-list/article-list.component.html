@@ -1,8 +1,11 @@
-<div *ngFor="let article of articles | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize" class="mt-4 mx-5">
-    <app-article-overview [headLine]="article.headLine"
-                          [content]="article.content"
-                          routerLink="article/{{article.id}}">
-    </app-article-overview>
+<h1  class="ms-5 mt-4">Articles</h1>
+
+<div *ngFor="let article of articles | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize"
+     class="mt-4 mx-5 shadow-sm">
+    <div class="border border-2 rounded-3 p-3" routerLink="article/{{article.id}}">
+        <h2 class="">{{article.headLine}}</h2>
+        <div>{{getLimitedArticleContent(article.content)}}</div>
+    </div>
 </div>
 
 <div class="mt-4 d-flex justify-content-center">

@@ -1,8 +1,19 @@
-<div class="border border-bottom row justify-content-between">
-    <h1 class="col-3 link-pointer" routerLink="">Cyber-Sicherheit Blog</h1>
+<div class="container-fluid header-background">
+    <div class="row justify-content-between">
+        <h1 class="col link-pointer my-2 ms-3" routerLink="">Cyber-Sicherheit Blog</h1>
 
-    <div class="col-1 mt-1">
-        <button *ngIf="isLoggedIn" (click)="login()" class="btn btn-outline-primary btn-lg">Login</button>
-        <button *ngIf="!isLoggedIn" (click)="logout()" class="btn btn-outline-primary btn-lg">Logout</button>
+        <div class="col my-2 d-flex justify-content-end pe-5">
+            <!--        TODO: isLoggedIn checken-->
+            <button *ngIf="isLoggedIn" (click)="adminConsole()" class="btn btn-outline-secondary btn-lg ms-3">Admin Console</button>
+
+            <button *ngIf="isLoggedIn" (click)="newArticle()" class="btn btn-outline-secondary btn-lg ms-3">New Article</button>
+
+            <button *ngIf="isLoggedIn" (click)="register()" class="btn btn-outline-primary btn-lg ms-3">Register</button>
+
+            <button *ngIf="isLoggedIn" (click)="login()" class="btn btn-outline-primary btn-lg ms-3">Login</button>
+            <button *ngIf="!isLoggedIn" (click)="logout()" class="btn btn-outline-primary btn-lg ms-3">Logout</button>
+        </div>
     </div>
+
+    <div class="pt-4"></div>
 </div>
