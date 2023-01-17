@@ -39,9 +39,15 @@ export class ArticleListComponent implements OnInit {
         //TODO: refresh Articles
     }
 
+    public setPageNumber(pageNumber: number): void{
+        this.page = pageNumber;
+        this.refreshArticles();
+    }
+
     public setPageSize(event: Event): void{
         this.pageSize = Number(event);
         this.dataService.savePageSize(this.pageSize);
+        this.refreshArticles();
     }
 
     public getLimitedArticleContent(content: string): string{

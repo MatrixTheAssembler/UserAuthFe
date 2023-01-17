@@ -15,6 +15,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {ArticleComponent} from './components/article/article.component';
 import {NewArticleComponent} from './components/new-article/new-article.component';
 import {AdminConsoleComponent} from './components/admin-console/admin-console.component';
+import {PaginationComponent} from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {AdminConsoleComponent} from './components/admin-console/admin-console.co
     HeaderComponent,
     ArticleComponent,
     NewArticleComponent,
-    AdminConsoleComponent
+    AdminConsoleComponent,
+    PaginationComponent
   ],
     imports: [
         BrowserModule,

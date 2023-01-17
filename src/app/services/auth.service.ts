@@ -33,18 +33,26 @@ export class AuthService {
     }
 
     get isLeser(): boolean {
+        //TODO
+        return true;
         return this.user!.roles!.includes(RoleEnum.LESER);
     }
 
     get isAutor(): boolean {
+        //TODO
+        return true;
         return this.user!.roles!.includes(RoleEnum.AUTOR);
     }
 
     get isModerator(): boolean {
+        //TODO
+        return true;
         return this.user!.roles!.includes(RoleEnum.MODERATOR);
     }
 
     get isAdmin(): boolean {
+        //TODO
+        return true;
         return this.user!.roles!.includes(RoleEnum.ADMIN);
     }
 

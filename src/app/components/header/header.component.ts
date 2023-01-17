@@ -13,10 +13,6 @@ export class HeaderComponent {
                 private authService: AuthService) {
     }
 
-    get isLoggedIn(): boolean {
-        return this.authService.isUserLoggedIn;
-    }
-
     public register(): void {
         this.router.navigate(["register"]);
     }
@@ -35,5 +31,19 @@ export class HeaderComponent {
 
     public adminConsole(): void {
         this.router.navigate(["admin-console"]);
+    }
+
+    get isLoggedIn(): boolean {
+        //TODO
+        return false;
+        return this.authService.isUserLoggedIn;
+    }
+
+    get isAutor(): boolean {
+        return this.authService.isAutor;
+    }
+
+    get isAdmin(): boolean {
+        return this.authService.isAdmin;
     }
 }

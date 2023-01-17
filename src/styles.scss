@@ -3,6 +3,7 @@
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500&display=swap');
+@import "node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
 *{
     font-family: 'Noto Sans', sans-serif;
