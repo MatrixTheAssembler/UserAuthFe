@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         const username = this.loginForm.value.username;
         const password = this.loginForm.value.password;
 
-        this.loginApiService.login(username, password).pipe(take(1)).subscribe({
+        this.loginApiService.login({username, password}).pipe(take(1)).subscribe({
             next: response => {
                 this.authService.authenticate(response.accessToken, response.refreshToken);
                 this.router.navigate([""]);

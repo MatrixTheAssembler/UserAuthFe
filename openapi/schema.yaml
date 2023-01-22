@@ -11,17 +11,12 @@ paths:
             tags:
                 - LoginApi
             operationId: login
-            parameters:
-                -   name: username
-                    in: query
-                    required: true
-                    schema:
-                        type: string
-                -   name: password
-                    in: query
-                    required: true
-                    schema:
-                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/User"
+                required: true
             responses:
                 "200":
                     description: OK
@@ -29,6 +24,19 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/TokenData"
+
+    /test:
+        get:
+            tags:
+                - TestApi
+            operationId: test
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: string
 
     /users/{username}:
         get:

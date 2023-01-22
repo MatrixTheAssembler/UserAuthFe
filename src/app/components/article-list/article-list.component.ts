@@ -24,10 +24,6 @@ export class ArticleListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if (!this.authService.isUserLoggedIn) {
-            this.router.navigate(["login"]);
-        }
-
         this._articles = this.mockService.getArticles(10, 3);
     }
 

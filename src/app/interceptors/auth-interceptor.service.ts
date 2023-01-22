@@ -21,6 +21,8 @@ export class AuthInterceptor implements HttpInterceptor {
         const accessToken = this.authService.accessToken;
         const refreshToken = this.authService.refreshToken;
 
+        console.log(request.url)
+
         if (accessToken.length && !this.isRefreshing) {
             request = this.addTokenHeader(request, accessToken);
         }
@@ -28,10 +30,10 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             catchError(err => {
                 if (err.status === 401) {
-                    if(request.url.includes("login")){
-                        const error = err.error.message || err.statusText;
-                        return throwError(error)
-                    }
+                    // if(request.url.includes("login")){
+                    //     const error = err.error.message || err.statusText;
+                    //     return throwError(error)
+                    // }
                     return this.handle401Error(request, next, refreshToken);
 
                 }else if (err.status === 403) {
@@ -69,6 +71,7 @@ export class AuthInterceptor implements HttpInterceptor {
                 );
             }
         }
+
         return this.refreshTokenSubject.pipe(
             filter(token => token !== null),
             take(1),

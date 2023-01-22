@@ -23,8 +23,6 @@ export class AuthService {
     }
 
     get isUserLoggedIn(): boolean {
-        //TODO: true setzt login ausser Kraft
-        return true;
         return this.accessToken !== "";
     }
 
@@ -86,7 +84,6 @@ export class AuthService {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
 
-        //TODO: check if atob works
         const username = JSON.parse(window.atob(this._accessToken.split('.')[1])).sub;
 
         this.userApiService.getUserByUsername(username).pipe(take(1)).subscribe({
@@ -102,11 +99,12 @@ export class AuthService {
 
     //used to refresh tokens
     public refreshTokens(): Observable<any> {
-        const refreshTokenUrl = this.userApiService.configuration.basePath + "/users/refreshtoken";
+        const refreshTokenUrl = this.userApiService.configuration.basePath + "/refreshTokens";
 
         return this.http.get(refreshTokenUrl,
             {headers: {"Authorization": `Bearer ${this.refreshToken}`}}
-        ).pipe(take(1), map(response => response as { accessToken: string, refreshToken: string }),
+        ).pipe(take(1),
+            map(response => response as { accessToken: string, refreshToken: string }),
             tap(response => {
                 this.accessToken = response.accessToken;
                 this.refreshToken = response.refreshToken;

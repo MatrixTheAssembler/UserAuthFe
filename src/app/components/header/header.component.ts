@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import {TestApiService} from "../../../../build/openapi";
 
 @Component({
     selector: 'app-header',
@@ -10,6 +11,7 @@ import {Router} from "@angular/router";
 export class HeaderComponent {
 
     constructor(private router: Router,
+                private testService: TestApiService,
                 private authService: AuthService) {
     }
 
@@ -34,8 +36,6 @@ export class HeaderComponent {
     }
 
     get isLoggedIn(): boolean {
-        //TODO
-        return false;
         return this.authService.isUserLoggedIn;
     }
 
@@ -45,5 +45,14 @@ export class HeaderComponent {
 
     get isAdmin(): boolean {
         return this.authService.isAdmin;
+    }
+
+    test() {
+        this.testService.test().subscribe({
+            next: response =>
+                console.log("Yeah" + response),
+            error: err =>
+                console.log("Oh" + err)
+        });
     }
 }

@@ -4,14 +4,17 @@
 
         <div class="col my-2 d-flex justify-content-end pe-5">
             <!--        TODO: isLoggedIn checken-->
-            <button *ngIf="isAdmin" (click)="adminConsole()" class="btn btn-outline-secondary btn-lg ms-3">Admin Console</button>
+            <button *ngIf="isAdmin && isLoggedIn" (click)="adminConsole()" class="btn btn-outline-secondary btn-lg ms-3">Admin Console</button>
 
-            <button *ngIf="isAutor" (click)="newArticle()" class="btn btn-outline-secondary btn-lg ms-3">New Article</button>
+            <button *ngIf="isAutor && isLoggedIn" (click)="newArticle()" class="btn btn-outline-secondary btn-lg ms-3">New Article</button>
 
             <button *ngIf="!isLoggedIn" (click)="register()" class="btn btn-outline-primary btn-lg ms-3">Register</button>
 
             <button *ngIf="!isLoggedIn" (click)="login()" class="btn btn-outline-primary btn-lg ms-3">Login</button>
             <button *ngIf="isLoggedIn" (click)="logout()" class="btn btn-outline-primary btn-lg ms-3">Logout</button>
+
+
+            <button (click)="test()" class="btn btn-outline-primary btn-lg ms-3">Test</button>
         </div>
     </div>
 
