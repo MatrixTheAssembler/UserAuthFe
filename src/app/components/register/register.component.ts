@@ -5,6 +5,8 @@ import {ViewportScroller} from "@angular/common";
 import {AuthService} from "../../services/auth.service";
 import {DataService} from "../../services/data.service";
 import {MessageService} from "../../services/message.service";
+import {RegisterApiService} from "../../../../build/openapi";
+import {take} from "rxjs";
 
 @Component({
     selector: 'app-register',
@@ -18,7 +20,8 @@ export class RegisterComponent implements OnInit {
                 private viewportScroller: ViewportScroller,
                 private authService: AuthService,
                 private dataService: DataService,
-                private messageService: MessageService) {
+                private messageService: MessageService,
+                private registerApiService: RegisterApiService) {
     }
 
     ngOnInit(): void {
@@ -32,8 +35,24 @@ export class RegisterComponent implements OnInit {
     public register(): void {
         const username = this.registerForm.value.username;
         const password = this.registerForm.value.password;
+        const confirmPassword = this.registerForm.value.confirmPassword;
 
-        //TODO: Implement register
+        if (password !== confirmPassword) {
+            this.displayAlert("Passwords do not match.", "danger");
+            return;
+        }
+
+        this.registerApiService.register({username, password})
+            .pipe(take(1))
+            .subscribe({
+                next: () => {
+                    this.registerForm.reset();
+                    this.router.navigate(["/login"]);
+                },
+                error: (err: string) => this.displayAlert(err, "danger")
+            });
+
+
     }
 
     public displayAlert(message: string, error: string): void {
@@ -42,7 +61,6 @@ export class RegisterComponent implements OnInit {
     }
 
     get isValidForm(): boolean {
-        return this.registerForm.valid &&
-            this.registerForm.value.password === this.registerForm.value.confirmPassword;
+        return this.registerForm.valid;
     }
 }

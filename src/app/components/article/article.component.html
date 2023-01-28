@@ -1,4 +1,7 @@
-<h1 class="ms-5 mt-4">{{articleHeadLine}}</h1>
+<h1 class="ms-5 mt-4">{{articleHeadline}}</h1>
+
+<div class="ms-5 text-gray">Date: {{articleDate}}, Author: {{articleAuthor}}</div>
+
 <div class="mx-5 mt-4">
     <div>{{articleContent}}</div>
 
@@ -10,7 +13,7 @@
                 <label for="comment">New Comment</label>
                 <textarea class="form-control" rows="3" formControlName="comment" id="comment"></textarea>
             </div>
-            <button class="btn btn-primary" (click)="addComment()">Submit</button>
+            <button class="btn btn-primary" (click)="addComment()" *ngIf="isLoggedIn">Submit</button>
         </form>
 
         <div class="comments">
@@ -23,7 +26,7 @@
             </div>
         </div>
 
-        <app-pagination [dataList]="articleComments"
+        <app-pagination [dataList]="articleComments" *ngIf="articleComments.length"
                         (pageNumberChangedEvent)="setPageNumber($event)"
                         (pageSizeChangedEvent)="setPageSize($event)">
         </app-pagination>

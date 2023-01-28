@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
-import {Article} from "../../../../build/openapi";
+import {Article, ArticleApiService} from "../../../../build/openapi";
 import {DataService} from "../../services/data.service";
-import {MockService} from "../../services/mock.service";
+import {take} from "rxjs";
 
 @Component({
     selector: 'app-article-list',
@@ -20,30 +20,40 @@ export class ArticleListComponent implements OnInit {
     constructor(private router: Router,
                 private authService: AuthService,
                 private dataService: DataService,
-                private mockService: MockService) {
+                private articleApiService: ArticleApiService) {
     }
 
     ngOnInit(): void {
-        this._articles = this.mockService.getArticles(10, 3);
+        this.articleApiService.getAllArticles()
+            .pipe(take(1))
+            .subscribe(articles => this._articles = articles);
     }
 
     get articles(): Article[]{
-        return this._articles;
+        return this._articles.sort((a, b) =>
+            new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime());
     }
 
-    public refreshArticles(): void{
-        //TODO: refresh Articles
+    public articleAuthor(article: Article): string {
+        return article.author ?? "Unknown Author";
+    }
+
+    public articleDate(article: Article): string {
+        const date = new Date(article.createdAt ?? 0);
+
+        if(date.getTime() === new Date(0).getTime()){
+            return "Unknown Date";
+        }
+        return date.toLocaleDateString();
     }
 
     public setPageNumber(pageNumber: number): void{
         this.page = pageNumber;
-        this.refreshArticles();
     }
 
     public setPageSize(event: Event): void{
         this.pageSize = Number(event);
         this.dataService.savePageSize(this.pageSize);
-        this.refreshArticles();
     }
 
     public getLimitedArticleContent(content: string): string{

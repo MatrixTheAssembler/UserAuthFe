@@ -1,14 +1,23 @@
 <h1  class="ms-5 mt-4">Articles</h1>
 
-<div *ngFor="let article of articles | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize"
-     class="mt-4 mx-5 shadow-sm">
-    <div class="border border-2 rounded-3 p-3" routerLink="article/{{article.id}}">
-        <h2 class="">{{article.headLine}}</h2>
-        <div>{{getLimitedArticleContent(article.content)}}</div>
+<div *ngIf="articles.length">
+    <div *ngFor="let article of articles | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize"
+         class="mt-4 mx-5 shadow-sm">
+        <div class="border border-2 rounded-3 p-3" routerLink="article/{{article.id}}">
+            <h2 class="">{{article.headline}}</h2>
+            <div class="text-gray">Date: {{articleDate(article)}}, Author: {{articleAuthor(article)}}</div>
+            <div>{{getLimitedArticleContent(article.content)}}</div>
+        </div>
     </div>
+
+    <app-pagination [dataList]="articles"
+                    (pageNumberChangedEvent)="setPageNumber($event)"
+                    (pageSizeChangedEvent)="setPageSize($event)">
+    </app-pagination>
 </div>
 
-<app-pagination [dataList]="articles"
-                (pageNumberChangedEvent)="setPageNumber($event)"
-                (pageSizeChangedEvent)="setPageSize($event)">
-</app-pagination>
+<div *ngIf="!articles.length">
+    <div class="text-center mt-5">
+        <h1>No articles found</h1>
+    </div>
+</div>

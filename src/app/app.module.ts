@@ -18,18 +18,18 @@ import {AdminConsoleComponent} from './components/admin-console/admin-console.co
 import {PaginationComponent} from './components/pagination/pagination.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PageNotFoundComponent,
-    LoginComponent,
-    ArticleListComponent,
-    RegisterComponent,
-    HeaderComponent,
-    ArticleComponent,
-    NewArticleComponent,
-    AdminConsoleComponent,
-    PaginationComponent
-  ],
+    declarations: [
+        AppComponent,
+        PageNotFoundComponent,
+        LoginComponent,
+        ArticleListComponent,
+        RegisterComponent,
+        HeaderComponent,
+        ArticleComponent,
+        NewArticleComponent,
+        AdminConsoleComponent,
+        PaginationComponent
+    ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -38,13 +38,14 @@ import {PaginationComponent} from './components/pagination/pagination.component'
         HttpClientModule,
         FormsModule
     ],
-  providers: [
-      {
-          provide: HTTP_INTERCEPTORS,
-          useClass: AuthInterceptor,
-          multi: true
-      }
-  ],
-  bootstrap: [AppComponent]
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

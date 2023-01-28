@@ -22,7 +22,6 @@ export class AppComponent implements OnInit{
             this.authService.refreshTokens().pipe(take(1)).subscribe({
                 error: () => {
                     this.authService.logout();
-                    this.router.navigate([""]);
                 }
             });
         }
@@ -34,12 +33,10 @@ export class AppComponent implements OnInit{
 
                 if (!refreshToken.length) {
                     this.authService.logout();
-                    this.router.navigate([""]);
                 } else {
                     this.authService.refreshTokens().pipe(take(1)).subscribe({
                         error: () => {
                             this.authService.logout();
-                            this.router.navigate([""]);
                         }
                     });
                 }

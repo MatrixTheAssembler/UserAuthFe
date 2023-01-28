@@ -25,6 +25,23 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/TokenData"
 
+
+    /register:
+        post:
+            tags:
+                - RegisterApi
+            operationId: register
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/User"
+                required: true
+            responses:
+                "200":
+                    description: OK
+
+
     /test:
         get:
             tags:
@@ -37,6 +54,7 @@ paths:
                         application/json:
                             schema:
                                 type: string
+
 
     /users/{username}:
         get:
@@ -57,6 +75,33 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/User"
 
+        put:
+            tags:
+                - UserApi
+            operationId: updateUser
+            parameters:
+                -   name: username
+                    in: path
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                $ref: "#/components/schemas/RoleEnum"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+
+
     /users/refreshtoken:
         get:
             tags:
@@ -65,6 +110,7 @@ paths:
             responses:
                 "200":
                     description: OK
+
 
     /users:
         get:
@@ -98,6 +144,164 @@ paths:
                         application/json:
                             schema:
                                 $ref: "#/components/schemas/User"
+
+
+    /articles:
+        get:
+            tags:
+                - ArticleApi
+            operationId: getAllArticles
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Article"
+
+        post:
+            tags:
+                - ArticleApi
+            operationId: createArticle
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Article"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Article"
+
+
+    /articles/{id}:
+        get:
+            tags:
+                - ArticleApi
+            operationId: getArticle
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Article"
+
+        put:
+            tags:
+                - ArticleApi
+            operationId: updateArticle
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Article"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Article"
+
+        delete:
+            tags:
+                - ArticleApi
+            operationId: deleteArticle
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+            responses:
+                "200":
+                    description: OK
+
+
+    /comment/{articleId}:
+        post:
+            tags:
+                - CommentApi
+            operationId: addComment
+            parameters:
+                -   name: articleId
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                required: true
+            responses:
+                "201":
+                    description: CREATED
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+
+
+    /comment/{id}:
+        put:
+            tags:
+                - CommentApi
+            operationId: updateComment
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Comment"
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Comment"
+
+        delete:
+            tags:
+                - CommentApi
+            operationId: deleteComment
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+            responses:
+                "200":
+                    description: OK
 
 
 components:
@@ -138,12 +342,12 @@ components:
         Article:
             type: object
             required:
-                - headLine
+                - headline
                 - content
             properties:
                 id:
                     type: number
-                headLine:
+                headline:
                     type: string
                 content:
                     type: string
@@ -151,6 +355,11 @@ components:
                     type: array
                     items:
                         $ref: "#/components/schemas/Comment"
+                author:
+                    type: string
+                createdAt:
+                    type: string
+                    format: date-time
 
         Comment:
             type: object
@@ -161,6 +370,11 @@ components:
                     type: number
                 content:
                     type: string
+                author:
+                    type: string
+                createdAt:
+                    type: string
+                    format: date-time
 
         RoleEnum:
             type: string

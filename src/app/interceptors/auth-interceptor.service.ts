@@ -21,8 +21,6 @@ export class AuthInterceptor implements HttpInterceptor {
         const accessToken = this.authService.accessToken;
         const refreshToken = this.authService.refreshToken;
 
-        console.log(request.url)
-
         if (accessToken.length && !this.isRefreshing) {
             request = this.addTokenHeader(request, accessToken);
         }
@@ -39,7 +37,6 @@ export class AuthInterceptor implements HttpInterceptor {
                 }else if (err.status === 403) {
                     this.messageService.displayAlert("Session has expired. You have been logged out.", "Session has expired.");
                     this.authService.logout();
-                    this.router.navigate([""]);
                 }
 
                 const error = err.error.message || err.statusText;

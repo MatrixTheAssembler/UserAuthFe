@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MockService} from "../../services/mock.service";
-import {RoleEnum, User} from "../../../../build/openapi";
+import {RoleEnum, User, UserApiService} from "../../../../build/openapi";
+import {take} from "rxjs";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
     selector: 'app-admin-console',
@@ -12,19 +13,34 @@ export class AdminConsoleComponent implements OnInit {
 
     public RolesEnum = RoleEnum;
 
-    constructor(private mockService: MockService) {
+    constructor(private authService: AuthService,
+                private userApiService: UserApiService) {
     }
 
     ngOnInit(): void {
-        this._users = this.mockService.getUsers(10);
+        this.userApiService.getAllUsers()
+            .pipe(take(1))
+            .subscribe(users => this._users = users);
     }
 
     get users(): User[] {
-        return this._users;
+        return this._users.filter(u => u.username !== this.authService.username);
     }
 
-    changeRole(user: User, role: RoleEnum): void {
-        this._users.find(u => u.id === user.id)!.roles!.push(role);
+    public changeRole(user: User, role: RoleEnum): void {
+        if (user.roles!.includes(role)) {
+            user.roles!.splice(user.roles!.indexOf(role), 1);
+        } else {
+            user.roles!.push(role);
+        }
+
+        this.userApiService.updateUser(user.username, user.roles!)
+            .pipe(take(1))
+            .subscribe(resp =>
+                this._users.find(u => u.id === user.id)!.roles = resp.roles
+            );
+
+        this.authService.refreshTokens();
     }
 
     public firstLetterBig(role: RoleEnum): string {

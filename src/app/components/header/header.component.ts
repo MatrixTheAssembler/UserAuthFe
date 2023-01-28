@@ -36,7 +36,7 @@ export class HeaderComponent {
     }
 
     get isLoggedIn(): boolean {
-        return this.authService.isUserLoggedIn;
+        return this.authService.isLoggedIn;
     }
 
     get isAutor(): boolean {
@@ -47,12 +47,11 @@ export class HeaderComponent {
         return this.authService.isAdmin;
     }
 
-    test() {
-        this.testService.test().subscribe({
-            next: response =>
-                console.log("Yeah" + response),
-            error: err =>
-                console.log("Oh" + err)
-        });
+    get isLoginPage(): boolean {
+        return this.router.url === '/login';
+    }
+
+    get isRegisterPage(): boolean {
+        return this.router.url === '/register';
     }
 }

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Article, Comment} from "../../../../build/openapi";
+import {Article, ArticleApiService, Comment} from "../../../../build/openapi";
 import {ActivatedRoute, Router} from "@angular/router";
-import {MockService} from "../../services/mock.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DataService} from "../../services/data.service";
 import {AuthService} from "../../services/auth.service";
+import {take} from "rxjs";
 
 @Component({
     selector: 'app-article',
@@ -14,7 +14,7 @@ import {AuthService} from "../../services/auth.service";
 export class ArticleComponent implements OnInit {
     public commentForm!: FormGroup;
 
-    private article: Article = {content: "", headLine: ""};
+    private article: Article = {content: "", headline: ""};
 
     public page = 1;
     public pageSize = this.dataService.getPageSize();
@@ -23,7 +23,7 @@ export class ArticleComponent implements OnInit {
                 private route: ActivatedRoute,
                 private dataService: DataService,
                 private authService: AuthService,
-                private mockService: MockService) {
+                private articleApiService: ArticleApiService) {
     }
 
     ngOnInit(): void {
@@ -37,7 +37,12 @@ export class ArticleComponent implements OnInit {
 
             this.article.id = id;
 
-            this.article = this.mockService.getArticle(id, 10);
+            this.articleApiService.getArticle(id)
+                .pipe(take(1))
+                .subscribe({
+                    next: article => this.article = article,
+                    error: () => this.router.navigate(["404"])
+                });
         });
     }
 
@@ -45,12 +50,25 @@ export class ArticleComponent implements OnInit {
         return <number>this.article.id;
     }
 
-    get articleHeadLine(): string {
-        return this.article.headLine;
+    get articleHeadline(): string {
+        return this.article.headline;
     }
 
     get articleContent(): string {
         return this.article.content;
+    }
+
+    get articleAuthor(): string {
+        return this.article.author ?? "Unknown Author";
+    }
+
+    get articleDate(): string {
+        const date = new Date(this.article.createdAt ?? 0);
+
+        if (date.getMilliseconds() === new Date(0).getMilliseconds()) {
+            return "Unknown Date";
+        }
+        return date.toLocaleDateString();
     }
 
     get articleComments(): Comment[] {
@@ -66,22 +84,20 @@ export class ArticleComponent implements OnInit {
         this.commentForm.reset();
     }
 
-    public refreshComments(): void {
-        //TODO: refresh Comments
-    }
-
-    public setPageNumber(pageNumber: number): void{
+    public setPageNumber(pageNumber: number): void {
         this.page = pageNumber;
-        this.refreshComments();
     }
 
-    public setPageSize(event: Event): void{
+    public setPageSize(event: Event): void {
         this.pageSize = Number(event);
         this.dataService.savePageSize(this.pageSize);
-        this.refreshComments();
     }
 
-    get isModerator(): boolean{
+    get isLoggedIn(): boolean {
+        return this.authService.isLoggedIn;
+    }
+
+    get isModerator(): boolean {
         return this.authService.isModerator;
     }
 }
