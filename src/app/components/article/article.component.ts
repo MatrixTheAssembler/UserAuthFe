@@ -101,8 +101,7 @@ export class ArticleComponent implements OnInit {
     }
 
     public deleteComment(id: number): void {
-
-        this.commentApiService.deleteComment(id!, this.articleId)
+        this.commentApiService.deleteComment(id!)
             .pipe(take(1))
             .subscribe(() => {
                 this.ngOnInit();
