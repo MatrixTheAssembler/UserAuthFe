@@ -264,13 +264,18 @@ paths:
                                 $ref: "#/components/schemas/Comment"
 
 
-    /comment/{id}:
+    /comment/{articleId}/{commentId}:
         put:
             tags:
                 - CommentApi
             operationId: updateComment
             parameters:
-                -   name: id
+                -   name: commentId
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+                -   name: articleId
                     in: path
                     required: true
                     schema:
@@ -294,7 +299,12 @@ paths:
                 - CommentApi
             operationId: deleteComment
             parameters:
-                -   name: id
+                -   name: commentId
+                    in: path
+                    required: true
+                    schema:
+                        type: number
+                -   name: articleId
                     in: path
                     required: true
                     schema:

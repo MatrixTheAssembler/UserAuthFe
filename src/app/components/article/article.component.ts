@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Article, ArticleApiService, Comment} from "../../../../build/openapi";
+import {Article, ArticleApiService, Comment, CommentApiService} from "../../../../build/openapi";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {DataService} from "../../services/data.service";
@@ -23,7 +23,8 @@ export class ArticleComponent implements OnInit {
                 private route: ActivatedRoute,
                 private dataService: DataService,
                 private authService: AuthService,
-                private articleApiService: ArticleApiService) {
+                private articleApiService: ArticleApiService,
+                private commentApiService: CommentApiService) {
     }
 
     ngOnInit(): void {
@@ -63,12 +64,23 @@ export class ArticleComponent implements OnInit {
     }
 
     get articleDate(): string {
-        const date = new Date(this.article.createdAt ?? 0);
+        return this.formatDate(this.article.createdAt ?? 0);
+    }
 
+    public formatDate(value: string | number): string {
+        const date = new Date(value);
         if (date.getMilliseconds() === new Date(0).getMilliseconds()) {
             return "Unknown Date";
         }
         return date.toLocaleDateString();
+    }
+
+    public formatDateWithTime(value: string | number): string {
+        const date = new Date(value);
+        if (date.getMilliseconds() === new Date(0).getMilliseconds()) {
+            return "Unknown Date";
+        }
+        return date.toLocaleString();
     }
 
     get articleComments(): Comment[] {
@@ -81,7 +93,20 @@ export class ArticleComponent implements OnInit {
             content: this.commentForm.get("comment")?.value
         });
 
-        this.commentForm.reset();
+        this.commentApiService.addComment(this.article.id!, this.commentForm.get("comment")?.value)
+            .pipe(take(1))
+            .subscribe(() => {
+                this.ngOnInit();
+            });
+    }
+
+    public deleteComment(id: number): void {
+
+        this.commentApiService.deleteComment(id!, this.articleId)
+            .pipe(take(1))
+            .subscribe(() => {
+                this.ngOnInit();
+            });
     }
 
     public setPageNumber(pageNumber: number): void {
@@ -99,5 +124,17 @@ export class ArticleComponent implements OnInit {
 
     get isModerator(): boolean {
         return this.authService.isModerator;
+    }
+
+    get username(): String {
+        return <String>this.authService.username;
+    }
+
+    public deleteArticle(articleId: number): void {
+        this.articleApiService.deleteArticle(articleId)
+            .pipe(take(1))
+            .subscribe(() => {
+                this.router.navigate(["/"]);
+            });
     }
 }

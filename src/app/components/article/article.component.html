@@ -3,24 +3,31 @@
 <div class="ms-5 text-gray">Date: {{articleDate}}, Author: {{articleAuthor}}</div>
 
 <div class="mx-5 mt-4">
-    <div>{{articleContent}}</div>
+    <div>
+        {{articleContent}}
+    </div>
+    <div>
+        <button class="btn btn-danger btn-sm mt-1" *ngIf="isModerator || articleAuthor == username" (click)="deleteArticle(articleId)">
+            <i class="bi bi-trash3-fill" style="font-size: 0.7rem"></i>
+        </button>
+    </div>
 
     <div class="comments_section">
         <h3>Comments ({{articleComments.length}})</h3>
 
-        <form [formGroup]="commentForm">
+        <form [formGroup]="commentForm" *ngIf="isLoggedIn">
             <div class="form-group">
                 <label for="comment">New Comment</label>
                 <textarea class="form-control" rows="3" formControlName="comment" id="comment"></textarea>
             </div>
-            <button class="btn btn-primary" (click)="addComment()" *ngIf="isLoggedIn">Submit</button>
+            <button class="btn btn-primary" (click)="addComment()">Submit</button>
         </form>
 
         <div class="comments">
             <div *ngFor="let comment of articleComments | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-                <div class="border rounded-2 shadow-sm mt-3 p-2">{{comment.content}}</div>
+                <div class="border rounded-2 shadow-sm mt-3 p-2">{{comment.author}} ({{formatDateWithTime(comment.createdAt ?? 0)}}):<br>{{comment.content}}</div>
 
-                <button class="btn btn-danger btn-sm mt-1" *ngIf="isModerator">
+                <button class="btn btn-danger btn-sm mt-1" *ngIf="isModerator || comment.author == username" (click)="deleteComment(comment.id!)">
                     <i class="bi bi-trash3-fill" style="font-size: 0.7rem"></i>
                 </button>
             </div>
