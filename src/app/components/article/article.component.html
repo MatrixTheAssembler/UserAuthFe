@@ -7,7 +7,7 @@
         {{articleContent}}
     </div>
     <div>
-        <button class="btn btn-danger btn-sm mt-1" *ngIf="isModerator || articleAuthor == username" (click)="deleteArticle(articleId)">
+        <button class="btn btn-danger btn-sm mt-1" *ngIf="isModerator || articleAuthor === username" (click)="deleteArticle(articleId)">
             <i class="bi bi-trash3-fill" style="font-size: 0.7rem"></i>
         </button>
     </div>
@@ -25,9 +25,9 @@
 
         <div class="comments">
             <div *ngFor="let comment of articleComments | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-                <div class="border rounded-2 shadow-sm mt-3 p-2">{{comment.author}} ({{formatDateWithTime(comment.createdAt ?? 0)}}):<br>{{comment.content}}</div>
+                <div class="border rounded-2 shadow-sm mt-3 p-2">{{commentAuthor(comment)}} ({{commentDate(comment)}}):<br>{{commentContent(comment)}}</div>
 
-                <button class="btn btn-danger btn-sm mt-1" *ngIf="isModerator || comment.author == username" (click)="deleteComment(comment.id!)">
+                <button class="btn btn-danger btn-sm mt-1" *ngIf="isModerator || commentAuthor(comment) === username" (click)="deleteComment(comment.id!)">
                     <i class="bi bi-trash3-fill" style="font-size: 0.7rem"></i>
                 </button>
             </div>

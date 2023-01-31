@@ -3,7 +3,6 @@
         <h1 class="col link-pointer my-2 ms-3" routerLink="">Cyber-Sicherheit Blog</h1>
 
         <div class="col my-2 d-flex justify-content-end pe-5">
-            <!--        TODO: isLoggedIn checken-->
             <button *ngIf="isAdmin" (click)="adminConsole()" class="btn btn-outline-secondary btn-lg ms-3">Admin Console</button>
 
             <button *ngIf="isAutor" (click)="newArticle()" class="btn btn-outline-secondary btn-lg ms-3">New Article</button>

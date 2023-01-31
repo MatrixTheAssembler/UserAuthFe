@@ -42,20 +42,6 @@ paths:
                     description: OK
 
 
-    /test:
-        get:
-            tags:
-                - TestApi
-            operationId: test
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                type: string
-
-
     /users/{username}:
         get:
             tags:
@@ -199,29 +185,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Article"
 
-        put:
-            tags:
-                - ArticleApi
-            operationId: updateArticle
-            parameters:
-                -   name: id
-                    in: path
-                    required: true
-                    schema:
-                        type: number
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Article"
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Article"
 
         delete:
             tags:
@@ -265,30 +228,6 @@ paths:
 
 
     /comment/{commentId}:
-        put:
-            tags:
-                - CommentApi
-            operationId: updateComment
-            parameters:
-                -   name: commentId
-                    in: path
-                    required: true
-                    schema:
-                        type: number
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/Comment"
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Comment"
-
         delete:
             tags:
                 - CommentApi

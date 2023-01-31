@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
-import {TestApiService} from "../../../../build/openapi";
 
 @Component({
     selector: 'app-header',
@@ -11,7 +10,6 @@ import {TestApiService} from "../../../../build/openapi";
 export class HeaderComponent {
 
     constructor(private router: Router,
-                private testService: TestApiService,
                 private authService: AuthService) {
     }
 
