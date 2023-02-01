@@ -29,6 +29,10 @@ export class AuthService {
         return this.user?.username;
     }
 
+    get roles(): Array<RoleEnum> | undefined {
+        return this.user?.roles;
+    }
+
     get userFromToken(): Observable<User | undefined> {
         if (!this.isLoggedIn) {
             return of(undefined);

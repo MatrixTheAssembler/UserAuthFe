@@ -52,4 +52,13 @@ export class HeaderComponent {
     get isRegisterPage(): boolean {
         return this.router.url === '/register';
     }
+
+    get getRoles(): String {
+        return this.authService.roles!.map(r => r.charAt(0).toUpperCase() + r.slice(1).toLowerCase()).join(", ");
+    }
+
+    get getUsername(): String {
+        return this.authService.username!;
+    }
+
 }
